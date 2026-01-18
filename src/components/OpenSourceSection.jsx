@@ -9,6 +9,7 @@ export function OpenSourceSection() {
   const featuredPRs = contributions
     .filter(pr => pr.featured)
     .sort((a, b) => (a.featured_order || 999) - (b.featured_order || 999))
+    .slice(0, 3)
   
   const displayPRs = featuredPRs.length > 0 
     ? featuredPRs 

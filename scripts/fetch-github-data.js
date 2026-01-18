@@ -12,6 +12,7 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_USERNAME = 'MehulKChaudhari';
 const OUTPUT_FILE = path.join(__dirname, '../public/data/github-prs.json');
 const CACHE_FILE = path.join(__dirname, '../.github-cache.json');
+const FEATURED_CONFIG = path.join(__dirname, '../src/data/featured-prs.json');
 
 const RATE_LIMIT_DELAY = 1100;
 
@@ -53,6 +54,25 @@ function loadCache() {
     console.warn('Failed to load cache:', error.message);
   }
   return { prs: {}, lastFetch: null };
+}
+
+function loadFeaturedConfig() {
+  try {
+    if (fs.existsSync(FEATURED_CONFIG)) {
+      const config = JSON.parse(fs.readFileSync(FEATURED_CONFIG, 'utf8'));
+      const featuredMap = {};
+      config.forEach(item => {
+        featuredMap[item.id] = {
+          featured: true,
+          featured_order: item.featured_order
+        };
+      });
+      return featuredMap;
+    }
+  } catch (error) {
+    console.warn('Failed to load featured PRs config:', error.message);
+  }
+  return {};
 }
 
 function saveCache(cache) {
@@ -107,6 +127,7 @@ async function main() {
   }
 
   const cache = loadCache();
+  const featuredConfig = loadFeaturedConfig();
   const headers = {
     'Accept': 'application/vnd.github.v3+json',
     ...(GITHUB_TOKEN && { 'Authorization': `token ${GITHUB_TOKEN}` })
@@ -132,7 +153,16 @@ async function main() {
     }
     
     if (cache.prs[cacheKey] && cache.prs[cacheKey].updated_at === pr.updated_at) {
-      detailedPRs.push(cache.prs[cacheKey]);
+      const cachedPR = { ...cache.prs[cacheKey] };
+      const featuredInfo = featuredConfig[pr.id];
+      if (featuredInfo) {
+        cachedPR.featured = featuredInfo.featured;
+        cachedPR.featured_order = featuredInfo.featured_order;
+      } else {
+        cachedPR.featured = false;
+        cachedPR.featured_order = undefined;
+      }
+      detailedPRs.push(cachedPR);
       cachedCount++;
       continue;
     }
@@ -167,7 +197,8 @@ async function main() {
           login: details.user?.login,
           avatar_url: details.user?.avatar_url
         },
-        featured: cache.prs[cacheKey]?.featured || false
+        featured: featuredConfig[pr.id]?.featured || false,
+        featured_order: featuredConfig[pr.id]?.featured_order
       };
 
       detailedPRs.push(prData);
@@ -178,7 +209,16 @@ async function main() {
     } catch (error) {
       console.error(`Failed to fetch ${cacheKey}:`, error.message);
       if (cache.prs[cacheKey]) {
-        detailedPRs.push(cache.prs[cacheKey]);
+        const cachedPR = { ...cache.prs[cacheKey] };
+        const featuredInfo = featuredConfig[pr.id];
+        if (featuredInfo) {
+          cachedPR.featured = featuredInfo.featured;
+          cachedPR.featured_order = featuredInfo.featured_order;
+        } else {
+          cachedPR.featured = false;
+          cachedPR.featured_order = undefined;
+        }
+        detailedPRs.push(cachedPR);
       }
     }
   }
@@ -196,7 +236,7 @@ async function main() {
 
   console.log(`\n✓ Saved ${detailedPRs.length} PRs to ${OUTPUT_FILE}`);
   console.log(`✓ Cache updated at ${cache.lastFetch}`);
-  console.log('\nTo feature a PR on home page, edit .github-cache.json and set "featured": true');
+  console.log(`\nTo feature PRs on home page, edit src/data/featured-prs.json`);
 }
 
 main().catch(console.error);
