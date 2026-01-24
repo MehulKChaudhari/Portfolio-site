@@ -1,31 +1,39 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useSyncExternalStore, useLayoutEffect } from 'react'
 
 const ThemeContext = createContext(null)
 
-export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('theme')
-      if (saved) return saved
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    }
-    return 'dark'
-  })
+function getSnapshot() {
+  const saved = localStorage.getItem('theme')
+  return saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+}
 
-  useEffect(() => {
-    const root = document.documentElement
-    if (theme === 'dark') {
-      root.classList.add('dark')
-      root.classList.remove('light')
-    } else {
-      root.classList.add('light')
-      root.classList.remove('dark')
-    }
+const listeners = new Set()
+
+function subscribe(callback) {
+  listeners.add(callback)
+  const handler = (e) => {
+    if (e.key === 'theme') callback()
+  }
+  addEventListener('storage', handler)
+  return () => {
+    listeners.delete(callback)
+    removeEventListener('storage', handler)
+  }
+}
+
+export function ThemeProvider({ children }) {
+  const theme = useSyncExternalStore(subscribe, getSnapshot)
+
+  useLayoutEffect(() => {
+    document.documentElement.classList.remove('dark', 'light')
+    document.documentElement.classList.add(theme)
     localStorage.setItem('theme', theme)
   }, [theme])
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'dark' ? 'light' : 'dark')
+    const newTheme = theme === 'dark' ? 'light' : 'dark'
+    localStorage.setItem('theme', newTheme)
+    listeners.forEach(cb => cb())
   }
 
   return (

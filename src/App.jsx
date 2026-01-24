@@ -24,7 +24,7 @@ function App() {
   return (
     <Router>
       <ThemeProvider>
-      <GithubProvider>
+        <GithubProvider>
           <div className="min-h-screen bg-bg text-text transition-colors flex flex-col">
             <Navbar />
             <div className="flex-1">
@@ -42,7 +42,7 @@ function App() {
             </div>
             <Footer />
           </div>
-      </GithubProvider>
+        </GithubProvider>
       </ThemeProvider>
     </Router>
   )
