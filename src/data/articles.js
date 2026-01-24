@@ -1,5 +1,17 @@
 export const articlesData = [
   {
+    id: 9,
+    title: "Syncing State Across Browser Tabs with the Storage Event",
+    description: "Learn how to sync state between browser tabs using the storage event. A simple built-in way to keep your app state synchronized across multiple tabs without complex setup.",
+    image: "/blogs/images/localstorage-sync-between-tabs.png",
+    date: "2026-01-24",
+    slug: "syncing-state-across-tabs-storage-event",
+    contentPath: "/blogs/syncing-state-across-tabs-storage-event.md",
+    tags: ["javascript", "localStorage", "browser-api", "frontend", "web-development"],
+    showCoverImage: false,
+    featured: true
+  },
+  {
     id: 1,
     title: "Beyond React.memo: Strategic Performance Optimization in Complex React Applications",
     description: "Most React developers know about React.memo(), but treating it as a silver bullet for performance issues is a common mistake. Learn strategic optimization techniques that go beyond memoization.",
@@ -90,7 +102,7 @@ export const articlesData = [
     contentPath: "/blogs/introduction-to-algorithms.md",
     tags: ["algorithms", "computer-science", "data-structures", "complexity-analysis", "techblog"],
     featured: false
-  }
+  },
 ]
 
 export const curatedArticles = articlesData.filter(article => article.featured === true)
