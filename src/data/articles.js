@@ -7,7 +7,7 @@ export const articlesData = [
     date: "2026-01-24",
     slug: "syncing-state-across-tabs-storage-event",
     contentPath: "/blogs/syncing-state-across-tabs-storage-event.md",
-    tags: ["javascript", "localStorage", "browser-api", "frontend", "web-development"],
+    tags: ["javascript", "localStorage"],
     showCoverImage: false,
     featured: true
   },
@@ -19,7 +19,7 @@ export const articlesData = [
     date: "2025-05-19",
     slug: "beyond-react-memo",
     contentPath: "/blogs/beyond-react-memo.md",
-    tags: ["react", "performance", "optimization", "frontend", "web-development"],
+    tags: ["react", "performance"],
     showCoverImage: false,
     featured: true
   },
@@ -31,7 +31,7 @@ export const articlesData = [
     date: "2025-05-08",
     slug: "react-keys-fundamental",
     contentPath: "/blogs/react-keys-fundamental.md",
-    tags: ["react", "fundamentals", "best-practices", "frontend", "web-development"],
+    tags: ["react", "fundamentals"],
     showCoverImage: false,
     featured: false
   },
@@ -43,7 +43,7 @@ export const articlesData = [
     date: "2025-04-29",
     slug: "modal-focus-trapping-youtube-iframe",
     contentPath: "/blogs/modal-focus-trapping-youtube-iframe.md",
-    tags: ["react", "accessibility", "a11y", "frontend", "web-development"],
+    tags: ["react", "accessibility"],
     showCoverImage: false,
     featured: false
   },
@@ -55,7 +55,7 @@ export const articlesData = [
     date: "2025-01-03",
     slug: "jwt-validation-go-public-keys",
     contentPath: "/blogs/jwt-validation-go-public-keys.md",
-    tags: ["go", "golang", "jwt", "security", "backend", "authentication"],
+    tags: ["go", "jwt", "security"],
     showCoverImage: false,
     featured: true
   },
@@ -67,7 +67,7 @@ export const articlesData = [
     date: "2024-11-12",
     slug: "sharding-vs-partitioning",
     contentPath: "/blogs/sharding-vs-partitioning.md",
-    tags: ["database", "system-design", "database-scaling", "techblog"],
+    tags: ["database", "system-design"],
     featured: true
   },
   {
@@ -78,7 +78,7 @@ export const articlesData = [
     date: "2021-11-11",
     slug: "async-and-defer",
     contentPath: "/blogs/async-and-defer.md",
-    tags: ["javascript", "html", "performance", "web-development", "frontend"],
+    tags: ["javascript", "performance"],
     featured: false
   },
   {
@@ -89,7 +89,7 @@ export const articlesData = [
     date: "2021-06-19",
     slug: "algorithm-analysis-asymptotic-notations",
     contentPath: "/blogs/algorithm-analysis-asymptotic-notations.md",
-    tags: ["algorithms", "data-structures", "computer-science", "complexity-analysis", "techblog"],
+    tags: ["algorithms", "computer-science"],
     featured: false
   },
   {
@@ -100,7 +100,7 @@ export const articlesData = [
     date: "2021-06-15",
     slug: "introduction-to-algorithms",
     contentPath: "/blogs/introduction-to-algorithms.md",
-    tags: ["algorithms", "computer-science", "data-structures", "complexity-analysis", "techblog"],
+    tags: ["algorithms", "computer-science"],
     featured: false
   },
 ]

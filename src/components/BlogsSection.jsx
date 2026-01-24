@@ -46,26 +46,26 @@ export const ArticlesSection = memo(function ArticlesSection() {
                   />
                 </div>
               )}
-              <div className="p-6">
-                <p className="text-xs text-text-subtle mb-2">
+              <div className="p-5">
+                <p className="text-xs text-text-subtle mb-1.5">
                   {new Date(article.date).toLocaleDateString('en-US', { 
                     year: 'numeric', 
                     month: 'long', 
                     day: 'numeric' 
                   })}
                 </p>
-                <h3 className="text-lg font-semibold text-text mb-2 group-hover:text-accent transition-colors">
+                <h3 className="text-base font-semibold text-text mb-2 group-hover:text-accent transition-colors line-clamp-2">
                   {article.title}
                 </h3>
-                <p className="text-sm text-text-muted leading-relaxed mb-4">
+                <p className="text-sm text-text-muted leading-snug mb-3 line-clamp-2">
                   {article.description}
                 </p>
                 {article.tags && article.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5">
                     {article.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs px-2.5 py-1 bg-surface border border-border/50 text-text-subtle rounded-md hover:border-accent/50 hover:text-accent transition-colors"
+                        className="text-xs px-2 py-0.5 bg-surface border border-border/50 text-text-subtle rounded-md hover:border-accent/50 hover:text-accent transition-colors"
                       >
                         #{tag}
                       </span>
