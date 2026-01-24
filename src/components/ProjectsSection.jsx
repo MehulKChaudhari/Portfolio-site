@@ -1,4 +1,3 @@
-import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
 import { curatedProjects } from '../data/projects'
@@ -15,7 +14,7 @@ const typeColors = {
   'backend': 'bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20'
 }
 
-export const ProjectsSection = memo(function ProjectsSection() {
+export function ProjectsSection() {
   return (
     <section>
       <div className="flex items-end justify-between mb-12">
@@ -132,4 +131,4 @@ export const ProjectsSection = memo(function ProjectsSection() {
       </div>
     </section>
   )
-})
+}

@@ -98,6 +98,7 @@ export function Hero() {
                   height="96"
                   loading="eager"
                   fetchpriority="high"
+                  decoding="sync"
                 />
                 <div className="pointer-events-none absolute inset-0">
                   <div className="absolute -left-1 -right-1 h-[130%] bg-white/10 rotate-[18deg]" />

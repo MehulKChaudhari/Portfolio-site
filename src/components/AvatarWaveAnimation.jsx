@@ -1,5 +1,3 @@
-import { useMemo } from 'react'
-
 function generateWavePath(centerX, centerY, baseRadius, amplitude, numWaves, startAngle = 0) {
   const points = []
   const angleStep = 1.5
@@ -18,17 +16,15 @@ function generateWavePath(centerX, centerY, baseRadius, amplitude, numWaves, sta
 }
 
 export function AvatarWaveAnimation({ gradientIdPrefix = 'avatar-wave' }) {
-  const waves = useMemo(() => {
-    // Generate multiple waves with varying sizes - some bigger, some smaller
-    return [
-      { amplitude: 2.8, numWaves: 6, radius: 47, startAngle: 0, opacity: 0.75 },
-      { amplitude: 1.2, numWaves: 10, radius: 45, startAngle: 25, opacity: 0.65 },
-      { amplitude: 3.2, numWaves: 5, radius: 47.5, startAngle: 50, opacity: 0.8 },
-      { amplitude: 1.5, numWaves: 9, radius: 45.5, startAngle: 75, opacity: 0.7 },
-      { amplitude: 2.5, numWaves: 7, radius: 46.5, startAngle: 100, opacity: 0.72 },
-      { amplitude: 1.8, numWaves: 11, radius: 45.2, startAngle: 125, opacity: 0.68 },
-    ]
-  }, [])
+  // Generate multiple waves with varying sizes - some bigger, some smaller
+  const waves = [
+    { amplitude: 2.8, numWaves: 6, radius: 47, startAngle: 0, opacity: 0.75 },
+    { amplitude: 1.2, numWaves: 10, radius: 45, startAngle: 25, opacity: 0.65 },
+    { amplitude: 3.2, numWaves: 5, radius: 47.5, startAngle: 50, opacity: 0.8 },
+    { amplitude: 1.5, numWaves: 9, radius: 45.5, startAngle: 75, opacity: 0.7 },
+    { amplitude: 2.5, numWaves: 7, radius: 46.5, startAngle: 100, opacity: 0.72 },
+    { amplitude: 1.8, numWaves: 11, radius: 45.2, startAngle: 125, opacity: 0.68 },
+  ]
 
   return (
     <div className="avatar-wave-container">

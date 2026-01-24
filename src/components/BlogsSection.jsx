@@ -1,8 +1,7 @@
-import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { curatedArticles } from '../data/articles'
 
-export const ArticlesSection = memo(function ArticlesSection() {
+export function ArticlesSection() {
   return (
     <section>
       <div className="flex items-end justify-between mb-12">
@@ -29,7 +28,7 @@ export const ArticlesSection = memo(function ArticlesSection() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {curatedArticles.map((article) => (
+          {curatedArticles.map((article, index) => (
             <Link
               key={article.id}
               to={`/articles/${article.slug}`}
@@ -41,8 +40,11 @@ export const ArticlesSection = memo(function ArticlesSection() {
                     src={article.image}
                     alt={article.title}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    loading="lazy"
+                    loading={index < 3 ? "eager" : "lazy"}
+                    fetchpriority={index < 3 ? "high" : "low"}
                     decoding="async"
+                    width="640"
+                    height="360"
                   />
                 </div>
               )}
@@ -79,5 +81,5 @@ export const ArticlesSection = memo(function ArticlesSection() {
       )}
     </section>
   )
-})
+}
 
