@@ -105,12 +105,12 @@
 
 @layer base {
   :root {
-    --color-bg: 250 250 252;
-    --color-surface: 255 255 255;
+    --color-bg: 245 245 244;
+    --color-surface: 250 250 249;
     --color-text: 15 23 42;
     --color-text-muted: 51 65 85;
     --color-text-subtle: 100 116 139;
-    --color-border: 226 232 240;
+    --color-border: 214 211 209;
     --color-accent: 234 88 12;
     --color-accent-hover: 194 65 12;
   }
@@ -245,6 +245,102 @@
     margin-top: 1.6em;
     margin-bottom: 1.6em;
     padding-left: 1em;
+  }
+
+  .prose .note {
+    position: relative;
+    background: rgba(250, 204, 21, 0.12);
+    border-left: 3px solid #eab308;
+    border-radius: 0 0.5rem 0.5rem 0;
+    padding: 1rem 1.25rem 1rem 1.5rem;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    font-size: 0.9em;
+    color: rgb(var(--color-text-muted));
+  }
+
+  .prose .note strong {
+    color: #a16207;
+    font-weight: 600;
+  }
+
+  .dark .prose .note {
+    background: rgba(250, 204, 21, 0.1);
+  }
+
+  .dark .prose .note strong {
+    color: #fbbf24;
+  }
+
+  /* Code block styling */
+  pre, code {
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.7;
+  }
+
+  /* Dark theme code block */
+  pre {
+    background-color: #18181b;
+    border-color: #3f3f46;
+  }
+
+  pre code {
+    color: #a1a1aa;
+  }
+
+  /* Syntax highlighting - subtle colors for both themes */
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-literal {
+    color: #a78bfa;
+  }
+
+  .hljs-string {
+    color: #4ade80;
+  }
+
+  .hljs-title,
+  .hljs-title.function_,
+  .hljs-title.class_ {
+    color: #fbbf24;
+  }
+
+  .hljs-attr,
+  .hljs-attribute {
+    color: #22d3ee;
+  }
+
+  .hljs-variable,
+  .hljs-params {
+    color: #fb923c;
+  }
+
+  .hljs-number,
+  .hljs-built_in {
+    color: #f472b6;
+  }
+
+  .hljs-comment,
+  .hljs-quote {
+    color: #71717a;
+    font-style: italic;
+  }
+
+  .hljs-name,
+  .hljs-tag {
+    color: #22d3ee;
+  }
+
+  /* Light theme - background only */
+  .light pre {
+    background-color: #fafafa !important;
+    border-color: #e4e4e7 !important;
+  }
+
+  .light pre code {
+    color: #52525b;
   }
 
   .prose hr {

@@ -8,20 +8,23 @@ import { useTheme } from '../context/ThemeContext'
 let ReactMarkdown = null
 let remarkGfm = null
 let rehypeHighlight = null
+let rehypeRaw = null
 let mermaid = null
 
 const loadMarkdown = async () => {
   if (!ReactMarkdown) {
-    const [rm, rgfm, rh] = await Promise.all([
+    const [rm, rgfm, rh, rr] = await Promise.all([
       import('react-markdown'),
       import('remark-gfm'),
-      import('rehype-highlight')
+      import('rehype-highlight'),
+      import('rehype-raw')
     ])
     ReactMarkdown = rm.default
     remarkGfm = rgfm.default
     rehypeHighlight = rh.default
+    rehypeRaw = rr.default
   }
-  return { ReactMarkdown, remarkGfm, rehypeHighlight }
+  return { ReactMarkdown, remarkGfm, rehypeHighlight, rehypeRaw }
 }
 
 const loadMermaid = async () => {
@@ -224,7 +227,7 @@ export function ArticlePage() {
                   <div className="prose prose-lg max-w-none mt-12" ref={mermaidRef}>
                     <markdownComponents.ReactMarkdown
                       remarkPlugins={[markdownComponents.remarkGfm]}
-                      rehypePlugins={[markdownComponents.rehypeHighlight]}
+                      rehypePlugins={[markdownComponents.rehypeRaw, markdownComponents.rehypeHighlight]}
                       components={{
                         img(props) {
                           return (
@@ -241,7 +244,14 @@ export function ArticlePage() {
                             </div>
                           )
                         },
-                code({ inline, className, children, ...props }) {
+                pre({ children, ...props }) {
+                  return (
+                    <pre className="border rounded-lg p-5 overflow-x-auto my-6" {...props}>
+                      {children}
+                    </pre>
+                  )
+                },
+                code({ inline, className, children, node, ...props }) {
                   const match = /language-(\w+)/.exec(className || '')
                   const isMermaid = match && match[1] === 'mermaid'
                   
@@ -253,14 +263,16 @@ export function ArticlePage() {
                     )
                   }
                   
-                  return !inline && match ? (
-                    <pre className="bg-surface border border-border rounded-lg p-4 overflow-x-auto my-6">
-                      <code className={className} {...props}>
+                  if (inline) {
+                    return (
+                      <code className="bg-surface/50 px-1.5 py-0.5 rounded text-sm font-mono" {...props}>
                         {children}
                       </code>
-                    </pre>
-                  ) : (
-                    <code className="bg-surface/50 px-1.5 py-0.5 rounded text-sm font-mono" {...props}>
+                    )
+                  }
+                  
+                  return (
+                    <code className={`${className || ''} font-mono`} {...props}>
                       {children}
                     </code>
                   )
@@ -343,6 +355,16 @@ export function ArticlePage() {
                       className="font-semibold text-text"
                     />
                   )
+                },
+                div({ className, children, ...props }) {
+                  if (className === 'note') {
+                    return (
+                      <div className="note" {...props}>
+                        {children}
+                      </div>
+                    )
+                  }
+                  return <div className={className} {...props}>{children}</div>
                 }
                   }}
                 >

@@ -49,7 +49,13 @@ export function OpenSourcePage() {
           <div className="text-text-subtle text-sm">No contributions found.</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {contributions.map((pr) => (
+            {contributions
+              .sort((a, b) => {
+                const dateA = new Date(a.mergedAt || a.updatedAt || a.createdAt)
+                const dateB = new Date(b.mergedAt || b.updatedAt || b.createdAt)
+                return dateB - dateA
+              })
+              .map((pr) => (
               <a
                 key={pr.id}
                 href={pr.url}
@@ -66,6 +72,8 @@ export function OpenSourcePage() {
                     <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium flex-shrink-0 ${
                       pr.status === 'merged' 
                         ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20'
+                        : pr.status === 'draft'
+                        ? 'bg-gray-500/10 text-gray-600 dark:text-gray-400 border border-gray-500/20'
                         : 'bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20'
                     }`}>
                       {pr.status === 'merged' ? (

@@ -182,6 +182,7 @@ async function main() {
         repository_owner: repoOwner,
         html_url: details.html_url,
         state: details.state,
+        draft: details.draft || false,
         merged: details.merged_at ? true : false,
         created_at: details.created_at,
         updated_at: details.updated_at,
@@ -226,15 +227,29 @@ async function main() {
   console.log(`\nFetched: ${fetchedCount} new/updated PRs`);
   console.log(`Cached: ${cachedCount} PRs`);
 
-  detailedPRs.sort((a, b) => new Date(b.merged_at) - new Date(a.merged_at));
+  // Filter out closed PRs - only keep open, merged, and draft
+  const filteredPRs = detailedPRs.filter(pr => {
+    // Keep merged PRs
+    if (pr.merged) return true;
+    // Keep draft PRs
+    if (pr.draft) return true;
+    // Keep open PRs
+    if (pr.state === 'open') return true;
+    // Filter out closed PRs
+    return false;
+  });
+
+  console.log(`Filtered: ${detailedPRs.length - filteredPRs.length} closed PRs removed`);
+
+  filteredPRs.sort((a, b) => new Date(b.merged_at || b.updated_at || b.created_at) - new Date(a.merged_at || a.updated_at || a.created_at));
 
   fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
-  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(detailedPRs, null, 2));
+  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(filteredPRs, null, 2));
 
   cache.lastFetch = new Date().toISOString();
   saveCache(cache);
 
-  console.log(`\n✓ Saved ${detailedPRs.length} PRs to ${OUTPUT_FILE}`);
+  console.log(`\n✓ Saved ${filteredPRs.length} PRs to ${OUTPUT_FILE}`);
   console.log(`✓ Cache updated at ${cache.lastFetch}`);
   console.log(`\nTo feature PRs on home page, edit src/data/featured-prs.json`);
 }

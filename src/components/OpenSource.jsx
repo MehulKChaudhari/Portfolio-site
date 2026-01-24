@@ -79,6 +79,8 @@ export function OpenSource() {
               className={`flex items-center px-3 py-1 rounded-full text-xs ${
                 pr.status === 'merged' 
                   ? 'bg-purple-500/20 text-purple-300 border border-purple-500/20'
+                  : pr.status === 'draft'
+                  ? 'bg-gray-500/20 text-gray-300 border border-gray-500/20'
                   : 'bg-green-500/20 text-green-300 border border-green-500/20'
               }`}
             >
@@ -143,9 +145,15 @@ export function OpenSource() {
             Loading...
           </div>
         ) : (
-          prs.map((pr, index) => (
-            <Card key={pr.id} pr={pr} index={index} />
-          ))
+          prs
+            .sort((a, b) => {
+              const dateA = new Date(a.mergedAt || a.updatedAt || a.createdAt)
+              const dateB = new Date(b.mergedAt || b.updatedAt || b.createdAt)
+              return dateB - dateA
+            })
+            .map((pr, index) => (
+              <Card key={pr.id} pr={pr} index={index} />
+            ))
         )}
       </div>
     </div>

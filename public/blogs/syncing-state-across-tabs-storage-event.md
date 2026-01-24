@@ -96,10 +96,6 @@ Now whenever the theme changes in another tab, your React component will re-rend
 
 </div>
 
-## When to Use What
-
-Use the storage event when you're already using localStorage and just need simple sync across tabs. Its built into browsers and works well. The storage event is just less known which is why many apps don't sync state across tabs even though they could.
-
 ## One More Thing: BroadcastChannel API
 
 There's also the BroadcastChannel API if you need more control over the messaging between tabs. It has good browser support now (around 95% global support) and lets you send any kind of messages between tabs at the same origin. Its more flexible than the storage event but also requires you to handle the messaging yourself. I might write about it in a future post.

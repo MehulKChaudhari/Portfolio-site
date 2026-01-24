@@ -14,8 +14,11 @@ export function OpenSourceSection() {
   const displayPRs = featuredPRs.length > 0 
     ? featuredPRs 
     : contributions
-        .filter(pr => pr.status === 'merged')
-        .sort((a, b) => new Date(b.mergedAt || b.createdAt) - new Date(a.mergedAt || a.createdAt))
+        .sort((a, b) => {
+          const dateA = new Date(a.mergedAt || a.updatedAt || a.createdAt)
+          const dateB = new Date(b.mergedAt || b.updatedAt || b.createdAt)
+          return dateB - dateA
+        })
         .slice(0, 3)
   
   if (isLoading) {
@@ -76,6 +79,8 @@ export function OpenSourceSection() {
                 <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium flex-shrink-0 ${
                   pr.status === 'merged'
                     ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20'
+                    : pr.status === 'draft'
+                    ? 'bg-gray-500/10 text-gray-600 dark:text-gray-400 border border-gray-500/20'
                     : 'bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20'
                 }`}>
                   {pr.status === 'merged' ? (
