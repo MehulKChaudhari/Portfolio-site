@@ -49,6 +49,11 @@ export function ArticlePage() {
   const mermaidRef = useRef(null)
   const hasMermaidRef = useRef(false)
 
+  // Scroll to top when component mounts or slug changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [slug])
+
   const headings = useMemo(() => {
     if (!content) return []
     const headingRegex = /^##+\s+(.+)$/gm
@@ -251,7 +256,7 @@ export function ArticlePage() {
                     </pre>
                   )
                 },
-                code({ inline, className, children, node, ...props }) {
+                code({ inline, className, children, ...props }) {
                   const match = /language-(\w+)/.exec(className || '')
                   const isMermaid = match && match[1] === 'mermaid'
                   

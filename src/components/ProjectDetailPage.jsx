@@ -31,6 +31,11 @@ export function ProjectDetailPage() {
   const project = projectsData.find(p => p.slug === slug)
   const mermaidRef = useRef(null)
 
+  // Scroll to top when component mounts or slug changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [slug])
+
   useEffect(() => {
     if (project?.sequenceDiagram) {
       loadMermaid().then(m => {

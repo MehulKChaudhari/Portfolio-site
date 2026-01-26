@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
 import { curatedProjects } from '../data/projects'
 
@@ -37,11 +37,31 @@ export function ProjectsSection() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
         {curatedProjects.map((project) => (
-          <Link
-            key={project.id}
-            to={`/projects/${project.slug}`}
-            className="group bg-surface/95 border border-border/80 rounded-2xl overflow-hidden transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-lg cursor-pointer"
-          >
+          <ProjectCard key={project.id} project={project} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function ProjectCard({ project }) {
+  const navigate = useNavigate()
+
+  const handleCardClick = (e) => {
+    // Don't navigate if clicking on a link
+    if (e.target.closest('a')) {
+      return
+    }
+    // Scroll to top before navigating
+    window.scrollTo({ top: 0, behavior: 'instant' })
+    navigate(`/projects/${project.slug}`)
+  }
+
+  return (
+    <div
+      onClick={handleCardClick}
+      className="group bg-surface/95 border border-border/80 rounded-2xl overflow-hidden transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-lg cursor-pointer"
+    >
             {project.image && (
               <div className="aspect-video w-full overflow-hidden bg-surface">
                 <img
@@ -126,9 +146,6 @@ export function ProjectsSection() {
                 </span>
               </div>
             </div>
-          </Link>
-        ))}
-      </div>
-    </section>
+    </div>
   )
 }

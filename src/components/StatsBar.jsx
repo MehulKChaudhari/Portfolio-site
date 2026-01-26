@@ -1,4 +1,5 @@
 import { useGithub } from '../context/GithubContext'
+import { AnimatedCounter } from './AnimatedCounter'
 
 function formatYearsSince(startYear) {
   const now = new Date()
@@ -63,7 +64,13 @@ export function StatsBar() {
               className={`pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r ${item.gradient}`}
             />
             <p className="text-xs text-text-subtle mb-1">{item.label}</p>
-            <p className="text-xl font-semibold text-text mb-1">{item.value}</p>
+            <p className="text-xl font-semibold text-text mb-1">
+              {typeof item.value === 'number' || (typeof item.value === 'string' && item.value !== '—' && !isNaN(parseFloat(item.value))) ? (
+                <AnimatedCounter value={item.value} />
+              ) : (
+                item.value
+              )}
+            </p>
             <p className="text-xs text-text-subtle">{item.hint}</p>
           </div>
         ))}
