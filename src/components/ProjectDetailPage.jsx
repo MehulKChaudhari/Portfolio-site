@@ -16,13 +16,15 @@ const loadMermaid = async () => {
 const typeLabels = {
   'full-stack': 'Full-stack',
   'frontend': 'Frontend',
-  'backend': 'Backend'
+  'backend': 'Backend',
+  'sdk': 'SDK / npm package – full-stack demo'
 }
 
 const typeColors = {
   'full-stack': 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20',
   'frontend': 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20',
-  'backend': 'bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20'
+  'backend': 'bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20',
+  'sdk': 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20'
 }
 
 export function ProjectDetailPage() {
@@ -37,7 +39,7 @@ export function ProjectDetailPage() {
   }, [slug])
 
   useEffect(() => {
-    if (project?.sequenceDiagram) {
+    if (project?.sequenceDiagram || project?.flowSequenceDiagram) {
       loadMermaid().then(m => {
         m.initialize(getMermaidConfig(theme))
         requestAnimationFrame(() => {
@@ -75,7 +77,7 @@ export function ProjectDetailPage() {
 
         <article>
           {project.image && (
-            <div className="mb-8 rounded-xl overflow-hidden border border-border">
+            <div className="mb-6 rounded-xl overflow-hidden border border-border">
               <img
                 src={project.image}
                 alt={project.title}
@@ -85,6 +87,11 @@ export function ProjectDetailPage() {
                 decoding="async"
               />
             </div>
+          )}
+          {project.coverNote && (
+            <p className="mb-8 text-sm text-text-subtle italic border-l-2 border-amber-500/50 dark:border-amber-400/50 pl-4 py-2 bg-amber-500/5 dark:bg-amber-400/5 rounded-r">
+              {project.coverNote}
+            </p>
           )}
 
           <header className="mb-8">
@@ -99,6 +106,11 @@ export function ProjectDetailPage() {
             <p className="text-lg text-text-muted leading-relaxed">
               {project.description}
             </p>
+            {project.headerNote && (
+              <p className="mt-6 text-sm text-text-subtle italic border-l-2 border-amber-500/50 dark:border-amber-400/50 pl-4 py-2 bg-amber-500/5 dark:bg-amber-400/5 rounded-r">
+                {project.headerNote}
+              </p>
+            )}
           </header>
 
           <div className="flex items-center gap-4 mb-12 pb-8 border-b border-border">
@@ -111,7 +123,7 @@ export function ProjectDetailPage() {
               >
                 <FaExternalLinkAlt className="w-4 h-4 transition-transform duration-200 group-hover:scale-110" />
                 <span className="group-hover:bg-gradient-to-r group-hover:from-sky-500 group-hover:via-teal-400 group-hover:to-indigo-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-200">
-                  Live Demo
+                  {project.liveLabel || 'Live Demo'}
                 </span>
               </a>
             )}
@@ -133,7 +145,7 @@ export function ProjectDetailPage() {
           <div className="space-y-12">
             {project.points && project.points.length > 0 && (
               <section>
-                <h2 className="text-2xl font-semibold text-text mb-6">Key Achievements</h2>
+                <h2 className="text-2xl font-semibold text-text mb-6">{project.pointsSectionTitle || 'Key Achievements'}</h2>
                 <div className="space-y-4">
                   {project.points.map((point, index) => (
                     <div key={index} className="flex gap-4">
@@ -149,10 +161,21 @@ export function ProjectDetailPage() {
 
             {project.sequenceDiagram && (
               <section>
-                <h2 className="text-2xl font-semibold text-text mb-6">System Flow</h2>
+                <h2 className="text-2xl font-semibold text-text mb-6">How it works</h2>
                 <div className="bg-surface/50 border border-border rounded-lg p-6 overflow-x-auto" ref={mermaidRef}>
                   <div className="mermaid">
                     {project.sequenceDiagram}
+                  </div>
+                </div>
+              </section>
+            )}
+
+            {project.flowSequenceDiagram && (
+              <section>
+                <h2 className="text-2xl font-semibold text-text mb-6">Execution flow</h2>
+                <div className="bg-surface/50 border border-border rounded-lg p-6 overflow-x-auto">
+                  <div className="mermaid">
+                    {project.flowSequenceDiagram}
                   </div>
                 </div>
               </section>
@@ -173,16 +196,36 @@ export function ProjectDetailPage() {
 
             <section>
               <h2 className="text-2xl font-semibold text-text mb-6">Tech Stack</h2>
-              <div className="flex flex-wrap gap-2">
-                {project.tech.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-4 py-2 bg-surface border border-border text-text-subtle rounded-lg text-sm font-medium transition-all duration-200 hover:border-accent/50 hover:text-text hover:shadow-sm"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
+              {project.techStackSections ? (
+                <div className="space-y-6">
+                  {project.techStackSections.map((section, i) => (
+                    <div key={i}>
+                      <p className="text-xs font-semibold tracking-wider text-text-subtle uppercase mb-2">{section.label}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {section.items.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-4 py-2 bg-surface border border-border text-text-subtle rounded-lg text-sm font-medium transition-all duration-200 hover:border-accent/50 hover:text-text hover:shadow-sm"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-4 py-2 bg-surface border border-border text-text-subtle rounded-lg text-sm font-medium transition-all duration-200 hover:border-accent/50 hover:text-text hover:shadow-sm"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              )}
             </section>
           </div>
         </article>
