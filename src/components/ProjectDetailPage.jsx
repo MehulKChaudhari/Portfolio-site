@@ -95,11 +95,11 @@ export function ProjectDetailPage() {
           )}
 
           <header className="mb-8">
-            <div className="flex items-start justify-between mb-4">
-              <h1 className="text-4xl sm:text-5xl font-display font-light text-text leading-tight">
+            <div className="flex flex-wrap items-start gap-x-4 gap-y-2 mb-4">
+              <h1 className="text-4xl sm:text-5xl font-display font-light text-text leading-tight min-w-0">
                 {project.title}
               </h1>
-              <span className={`text-xs px-3 py-1.5 rounded-md border font-medium flex-shrink-0 ml-4 ${typeColors[project.type]}`}>
+              <span className={`text-xs px-3 py-1.5 rounded-md border font-medium flex-shrink-0 ml-0 md:ml-4 ${typeColors[project.type]}`}>
                 {typeLabels[project.type]}
               </span>
             </div>
