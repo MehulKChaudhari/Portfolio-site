@@ -7,10 +7,11 @@ function formatYearsSince(startYear) {
 }
 
 export function StatsBar() {
-  const { contributions, isLoading } = useGithub()
+  const { contributions, isLoading, error } = useGithub()
 
   const totalPRs = contributions.length
   const mergedPRs = contributions.filter((pr) => pr.status === 'merged').length
+  const hasPRData = !isLoading && !error && contributions.length > 0
 
   const items = [
     {
@@ -21,8 +22,8 @@ export function StatsBar() {
     },
     {
       label: 'Open source PRs',
-      value: isLoading ? '—' : mergedPRs,
-      hint: isLoading ? 'Fetching GitHub data' : `merged PRs of ${totalPRs} total`,
+      value: isLoading ? '—' : hasPRData ? mergedPRs : '—',
+      hint: isLoading ? 'Fetching…' : error ? 'Data unavailable' : hasPRData ? `merged of ${totalPRs} total` : 'Data unavailable',
       gradient: 'from-violet-700 via-fuchsia-600 to-violet-700 dark:from-violet-400 dark:via-fuchsia-300 dark:to-violet-400',
     },
     {

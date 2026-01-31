@@ -3,7 +3,6 @@ import { useInView, useMotionValue, useSpring } from 'framer-motion'
 
 export function AnimatedCounter({ value }) {
   const ref = useRef(null)
-  const [displayValue, setDisplayValue] = useState('0')
   const motionValue = useMotionValue(0)
   const springValue = useSpring(motionValue, {
     damping: 60,
@@ -25,36 +24,38 @@ export function AnimatedCounter({ value }) {
     }
     return { num: null, suffix: String(val) }
   }
-  
+
   const { num, suffix } = parseValue(value)
-  
+
+  // Initial display = actual value so we never show "0" when the real stat is different
+  const [displayValue, setDisplayValue] = useState(() => {
+    const parsed = parseValue(value)
+    return parsed.num !== null
+      ? Math.floor(parsed.num).toLocaleString() + parsed.suffix
+      : (typeof value === 'string' ? value : String(value))
+  })
+
   useEffect(() => {
     if (isInView && num !== null) {
-      motionValue.set(0)
-      const timer = setTimeout(() => {
-        motionValue.set(num)
-      }, 100)
-      
-      return () => clearTimeout(timer)
+      motionValue.set(num)
     }
   }, [motionValue, isInView, num])
-  
+
   useEffect(() => {
     if (num === null) {
-      setDisplayValue(suffix)
+      setDisplayValue(suffix || String(value))
       return
     }
-    
+    motionValue.set(num)
     const unsubscribe = springValue.on('change', (latest) => {
       setDisplayValue(Math.floor(latest).toLocaleString() + suffix)
     })
-    
     return () => unsubscribe()
-  }, [springValue, num, suffix])
-  
+  }, [springValue, num, suffix, value, motionValue])
+
   if (num === null) {
     return <span>{value}</span>
   }
-  
+
   return <span ref={ref}>{displayValue}</span>
 }
