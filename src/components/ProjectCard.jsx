@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
 
 export const typeLabels = {
+  'mcp': 'MCP server',
   'full-stack': 'Full-stack',
   'frontend': 'Frontend',
   'backend': 'Backend',
@@ -9,6 +10,7 @@ export const typeLabels = {
 }
 
 export const typeColors = {
+  'mcp': 'bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/20',
   'full-stack': 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20',
   'frontend': 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20',
   'backend': 'bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20',

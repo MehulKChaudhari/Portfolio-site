@@ -1,6 +1,24 @@
 export const projectsData = [
   {
     id: 1,
+    title: "warp-drive-mcp",
+    slug: "warp-drive-mcp",
+    type: "mcp",
+    description: "MCP server that exposes WarpDrive and EmberData docs as tools. Lets Cursor, Claude Desktop, or any MCP client look up real docs instead of guessing.",
+    points: [
+      "Five read-only tools: search docs by keyword, get full package docs, package overview, guides, and deprecation checks. Docs come from canary.warp-drive.io with a 30-minute cache.",
+      "Runs as a stdio MCP process. Client starts it; communication is JSON-RPC over stdin/stdout. On tool call, the server fetches or uses cache, then searches or filters and returns the relevant content.",
+      "Install via npx (no global install). Works with Cursor, Claude Desktop, and other MCP clients. Node.js 18+.",
+      "Published on npm. README includes a Cursor rule snippet so assistants can be pointed at the tools when working with WarpDrive."
+    ],
+    tech: ["TypeScript", "Node.js", "MCP", "WarpDrive", "EmberData", "npm"],
+    image: "/projects/warp-drive-mcp/cover.png",
+    live: "https://www.npmjs.com/package/warp-drive-mcp",
+    liveLabel: "View package",
+    github: "https://github.com/MehulKChaudhari/warp-drive-mcp"
+  },
+  {
+    id: 2,
     title: "RedirIQ",
     slug: "rediriq",
     type: "full-stack",
@@ -47,7 +65,7 @@ export const projectsData = [
     hldDiagram: "/projects/rediriq/diagram.png"
   },
   {
-    id: 2,
+    id: 3,
     title: "Decision X-Ray",
     slug: "decision-xray",
     type: "sdk",
@@ -109,5 +127,5 @@ export const projectsData = [
   }
 ]
 
-export const curatedProjects = projectsData.filter(project => project.id === 1 || project.id === 2)
+export const curatedProjects = projectsData.filter(project => project.id === 1 || project.id === 2 || project.id === 3)
 
