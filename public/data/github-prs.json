@@ -1,5 +1,37 @@
 [
   {
+    "id": 4189358013,
+    "number": 10508,
+    "title": " feat(schema-dsl): add @Resource, @field, @id decorators ",
+    "description": "- Adds the @warp-drive/schema-dsl package with @Resource, @field, and @id decorators for defining schemas as decorated TypeScript  classes\r\n- Decorators are no-ops at runtime a Vite plugin (schemaDSL()) compiles them at build time via Babel AST into ResourceSchema objects exposed through a virtual:warp-drive-schemas module\r\n- Supports both modern (Polaris) and legacy schema output formats\r\n- Includes tests and initial documentation",
+    "repository": "warp-drive",
+    "repository_full_name": "warp-drive-data/warp-drive",
+    "repository_owner": "warp-drive-data",
+    "html_url": "https://github.com/warp-drive-data/warp-drive/pull/10508",
+    "state": "open",
+    "draft": false,
+    "merged": false,
+    "created_at": "2026-04-01T19:24:12Z",
+    "updated_at": "2026-04-01T19:27:51Z",
+    "closed_at": null,
+    "merged_at": null,
+    "additions": 3023,
+    "deletions": 27,
+    "changed_files": 37,
+    "commits": 13,
+    "comments": 0,
+    "labels": [
+      ":dart: canary",
+      ":label: feat"
+    ],
+    "user": {
+      "login": "MehulKChaudhari",
+      "avatar_url": "https://avatars.githubusercontent.com/u/55375534?v=4"
+    },
+    "featured": true,
+    "featured_order": 1
+  },
+  {
     "id": 3679536774,
     "number": 158,
     "title": "Add missing 5.11 version in versions list",
@@ -114,8 +146,7 @@
       "login": "MehulKChaudhari",
       "avatar_url": "https://avatars.githubusercontent.com/u/55375534?v=4"
     },
-    "featured": true,
-    "featured_order": 2
+    "featured": false
   },
   {
     "id": 3381135227,
@@ -143,7 +174,7 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/55375534?v=4"
     },
     "featured": true,
-    "featured_order": 1
+    "featured_order": 2
   },
   {
     "id": 3328547264,
@@ -992,7 +1023,8 @@
       "login": "MehulKChaudhari",
       "avatar_url": "https://avatars.githubusercontent.com/u/55375534?v=4"
     },
-    "featured": false
+    "featured": true,
+    "featured_order": 3
   },
   {
     "id": 2758825308,
@@ -1786,8 +1818,7 @@
       "login": "MehulKChaudhari",
       "avatar_url": "https://avatars.githubusercontent.com/u/55375534?v=4"
     },
-    "featured": true,
-    "featured_order": 3
+    "featured": false
   },
   {
     "id": 2308928342,
