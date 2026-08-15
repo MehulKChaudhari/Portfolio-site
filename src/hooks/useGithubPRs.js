@@ -72,7 +72,9 @@ export const useGithubPRs = () => {
           throw new Error('Invalid data format: expected array')
         }
 
-        const transformedData = data.map(transformPRData)
+        const transformedData = data
+          .map(transformPRData)
+          .filter((pr) => pr.status === 'merged' || pr.status === 'open' || pr.status === 'draft')
 
         setState({
           contributions: transformedData,
